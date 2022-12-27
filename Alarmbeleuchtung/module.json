@@ -1,0 +1,14 @@
+{
+    "id": "{15AC1D3E-06CC-0ECE-275A-914A0632DF58}",
+    "name": "Alarmbeleuchtung",
+    "type": 3,
+    "vendor": "UB",
+    "aliases": [
+        "Alarmbeleuchtung"
+    ],
+    "url": "https://github.com/ubittner/Alarmbeleuchtung/tree/main/Alarmbeleuchtung",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "ABEL"
+}
