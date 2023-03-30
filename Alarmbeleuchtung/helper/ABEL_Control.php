@@ -50,6 +50,7 @@ trait ABEL_Control
         if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
             $result = true;
             $timestamp = date('d.m.Y, H:i:s');
+            $location = $this->ReadPropertyString('Location');
             $actualAlarmLightState = $this->GetValue('AlarmLight');
             //Deactivate
             if (!$State) {
@@ -77,7 +78,12 @@ trait ABEL_Control
                         $text = 'Fehler, die Alarmbeleuchtung konnte nicht ausgeschaltet werden!';
                         $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $text, KL_ERROR);
                         //Protocol
-                        $this->UpdateAlarmProtocol($timestamp . ', ' . $text . ' (ID ' . $id . ')', 0);
+                        if ($location == '') {
+                            $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        } else {
+                            $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        }
+                        $this->UpdateAlarmProtocol($logText, 0);
                         return false;
                     }
                     $response = @RequestAction($id, false);
@@ -98,7 +104,13 @@ trait ABEL_Control
                 if ($result) {
                     //Protocol
                     if ($actualAlarmLightState) {
-                        $this->UpdateAlarmProtocol($timestamp . ', Die Alarmbeleuchtung wurde ausgeschaltet' . '. (ID ' . $id . ')', 0);
+                        $text = 'Die Alarmbeleuchtung wurde ausgeschaltet';
+                        if ($location == '') {
+                            $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        } else {
+                            $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        }
+                        $this->UpdateAlarmProtocol($logText, 0);
                     }
                 } else {
                     //Revert on failure
@@ -109,7 +121,12 @@ trait ABEL_Control
                     $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $text, KL_ERROR);
                     //Protocol
                     if ($actualAlarmLightState) {
-                        $this->UpdateAlarmProtocol($timestamp . ', ' . $text . ' (ID ' . $id . ')', 0);
+                        if ($location == '') {
+                            $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        } else {
+                            $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        }
+                        $this->UpdateAlarmProtocol($logText, 0);
                     }
                 }
             }
@@ -128,7 +145,12 @@ trait ABEL_Control
                     $this->SendDebug(__FUNCTION__, $text, 0);
                     if (!$actualAlarmLightState) {
                         //Protocol
-                        $this->UpdateAlarmProtocol($timestamp . ', ' . $text . '. (ID ' . $id . ')', 0);
+                        if ($location == '') {
+                            $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        } else {
+                            $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                        }
+                        $this->UpdateAlarmProtocol($logText, 0);
                     }
                 } // No delay, activate alarm light immediately
                 else {
@@ -188,6 +210,7 @@ trait ABEL_Control
         if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
             $result = true;
             $timestamp = date('d.m.Y, H:i:s');
+            $location = $this->ReadPropertyString('Location');
             $this->SendDebug(__FUNCTION__, 'Die Alarmbeleuchtung wird eingeschaltet', 0);
             $this->SetTimerInterval('ActivateAlarmLight', 0);
             $actualAlarmLightState = $this->GetValue('AlarmLight');
@@ -211,7 +234,12 @@ trait ABEL_Control
                     $text = 'Fehler, die Alarmbeleuchtung konnte nicht eingeschaltet werden!';
                     $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $text, KL_ERROR);
                     //Protocol
-                    $this->UpdateAlarmProtocol($timestamp . ', ' . $text . ' (ID ' . $id . ')', 0);
+                    if ($location == '') {
+                        $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                    } else {
+                        $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                    }
+                    $this->UpdateAlarmProtocol($logText, 0);
                     return false;
                 }
                 $response = @RequestAction($id, true);
@@ -231,7 +259,13 @@ trait ABEL_Control
             }
             if ($result) {
                 //Protocol
-                $this->UpdateAlarmProtocol($timestamp . ', Die Alarmbeleuchtung wurde eingeschaltet' . '. (ID ' . $id . ')', 0);
+                $text = 'Die Alarmbeleuchtung wurde eingeschaltet';
+                if ($location == '') {
+                    $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                } else {
+                    $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                }
+                $this->UpdateAlarmProtocol($logText, 0);
                 //Switch on duration
                 $duration = $this->ReadPropertyInteger('AlarmLightSwitchOnDuration');
                 $this->SetTimerInterval('DeactivateAlarmLight', $duration * 60 * 1000);
@@ -250,7 +284,12 @@ trait ABEL_Control
                 $this->SendDebug(__FUNCTION__, $text, 0);
                 $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $text, KL_ERROR);
                 //Protocol
-                $this->UpdateAlarmProtocol($timestamp . ', ' . $text . ' (ID ' . $id . ')', 0);
+                if ($location == '') {
+                    $logText = $timestamp . ', ' . $text . ' (ID ' . $this->InstanceID . ')';
+                } else {
+                    $logText = $timestamp . ', ' . $this->ReadPropertyString('Location') . ', Alarmbeleuchtung, ' . $text . ' (ID ' . $this->InstanceID . ')';
+                }
+                $this->UpdateAlarmProtocol($logText, 0);
             }
         }
         return $result;
