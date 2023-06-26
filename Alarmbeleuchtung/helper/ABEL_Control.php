@@ -47,7 +47,7 @@ trait ABEL_Control
         }
         $result = false;
         $id = $this->ReadPropertyInteger('AlarmLight');
-        if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
+        if ($id > 1 && @IPS_ObjectExists($id)) {
             $result = true;
             $timestamp = date('d.m.Y, H:i:s');
             $location = $this->ReadPropertyString('Location');
@@ -59,7 +59,7 @@ trait ABEL_Control
                 $this->SetTimerInterval('DeactivateAlarmLight', 0);
                 $this->SetValue('AlarmLight', false);
                 $commandControl = $this->ReadPropertyInteger('CommandControl');
-                if ($commandControl > 1 && @IPS_ObjectExists($commandControl)) { //0 = main category, 1 = none
+                if ($commandControl > 1 && @IPS_ObjectExists($commandControl)) {
                     $commands = [];
                     $commands[] = '@RequestAction(' . $id . ', ' . $value . ');';
                     $this->SendDebug(__FUNCTION__, 'Befehl: ' . json_encode(json_encode($commands)), 0);
@@ -207,7 +207,7 @@ trait ABEL_Control
         }
         $result = false;
         $id = $this->ReadPropertyInteger('AlarmLight');
-        if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
+        if ($id > 1 && @IPS_ObjectExists($id)) {
             $result = true;
             $timestamp = date('d.m.Y, H:i:s');
             $location = $this->ReadPropertyString('Location');
@@ -216,7 +216,7 @@ trait ABEL_Control
             $actualAlarmLightState = $this->GetValue('AlarmLight');
             $this->SetValue('AlarmLight', true);
             $commandControl = $this->ReadPropertyInteger('CommandControl');
-            if ($commandControl > 1 && @IPS_ObjectExists($commandControl)) { //0 = main category, 1 = none
+            if ($commandControl > 1 && @IPS_ObjectExists($commandControl)) {
                 $commands = [];
                 $commands[] = '@RequestAction(' . $id . ', ' . true . ');';
                 $this->SendDebug(__FUNCTION__, 'Befehl: ' . json_encode(json_encode($commands)), 0);
