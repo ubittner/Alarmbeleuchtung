@@ -59,13 +59,15 @@ Das Modul Alarmbeleuchtung reagiert auf verschiedene Auslöser.
 Das Modul Alarmbeleuchtung kann über eine externe Aktion geschaltet werden.  
 Nachfolgendes Beispiel schaltet die Alarmbeleuchtung ein.
 
-> ABEL_ToggleAlarmLight(12345, true);
+```php
+ABEL_ToggleAlarmLight(12345, true);
+```
 
 ### 6. PHP-Befehlsreferenz
 
 #### 6.1 Alarmbeleuchtung schalten
 
-```
+```text
 boolean ABEL_ToggleAlarmLight(integer INSTANCE_ID, boolean STATE);
 ```
 
@@ -77,5 +79,9 @@ Konnte der Befehl erfolgreich ausgeführt werden, liefert er als Ergebnis **TRUE
 | `STATE`       | false | Aus            |
 |               | true  | An             |
 
-Beispiel:
-> ABEL_ToggleAlarmLight(12345, false);
+**Beispiel**:
+```php
+ABEL_ToggleAlarmLight(12345, false);
+```
+
+---
