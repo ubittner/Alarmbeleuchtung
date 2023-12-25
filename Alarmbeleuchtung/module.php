@@ -1,14 +1,15 @@
 <?php
 
 /**
- * @project       Alarmbeleuchtung/Alarmbeleuchtung
+ * @project       Alarmbeleuchtung/Alarmbeleuchtung/
  * @file          module.php
  * @author        Ulrich Bittner
- * @copyright     2022 Ulrich Bittner
+ * @copyright     2023 Ulrich Bittner
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  */
 
 /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection SpellCheckingInspection */
 /** @noinspection PhpUnused */
 
 declare(strict_types=1);
@@ -19,7 +20,7 @@ class Alarmbeleuchtung extends IPSModule
 {
     // Helper
     use ABEL_AlarmProtocol;
-    use ABEL_Config;
+    use ABEL_ConfigurationForm;
     use ABEL_Control;
     use ABEL_TriggerConditions;
 
